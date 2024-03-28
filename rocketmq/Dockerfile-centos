@@ -28,15 +28,15 @@ RUN set -eux \
     && yum -y install curl gnupg unzip vim\
     && yum clean all -y
 
-RUN curl -L https://archive.apache.org/dist/rocketmq/${version}/rocketmq-all-${version}-bin-release.zip -o rocketmq.zip \
-    && curl -L https://archive.apache.org/dist/rocketmq/${version}/rocketmq-all-${version}-bin-release.zip.asc -o rocketmq.zip.asc \
+RUN curl -L https://archive.apache.org/dist/rocketmq/4.5.2/rocketmq-all-4.5.2-bin-release.zip -o rocketmq.zip \
+    && curl -L https://archive.apache.org/dist/rocketmq/4.5.2/rocketmq-all-4.5.2-bin-release.zip.asc -o rocketmq.zip.asc \
 	&& curl -L https://www.apache.org/dist/rocketmq/KEYS -o KEYS \
     && gpg --import KEYS \
     && gpg --batch --verify rocketmq.zip.asc rocketmq.zip
 
 RUN unzip rocketmq.zip \
-    && mkdir -p /tmp/rocketmq-${version} \
-	&& mv rocketmq*/* /tmp/rocketmq-${version}
+    && mkdir -p /tmp/rocketmq-4.5.2 \
+	&& mv rocketmq*/* /tmp/rocketmq-4.5.2
 
 ################################################################################
 # Build stage 2:
@@ -52,7 +52,7 @@ ARG gid=3000
 ARG version
 
 # Rocketmq version
-ENV ROCKETMQ_VERSION ${version}
+ENV ROCKETMQ_VERSION 4.5.2
 
 # Rocketmq home
 ENV ROCKETMQ_HOME  /home/rocketmq/rocketmq-${ROCKETMQ_VERSION}
@@ -78,7 +78,7 @@ RUN groupadd -g ${gid} ${group} \
 COPY scripts/ ${ROCKETMQ_HOME}/bin/
 
 # Copy RocketMQ artifact from builder
-COPY --from=builder --chown=${uid}:${gid} /tmp/rocketmq-${version}/ ${ROCKETMQ_HOME}
+COPY --from=builder --chown=${uid}:${gid} /tmp/rocketmq-4.5.2/ ${ROCKETMQ_HOME}
 
 # Override customized scripts for namesrv
 # Override customized scripts for broker
