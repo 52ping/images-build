@@ -50,7 +50,7 @@ ARG group=rocketmq
 ARG uid=3000
 ARG gid=3000
 
-ARG version
+ARG version=4.5.2
 
 # Rocketmq version
 ENV ROCKETMQ_VERSION ${version}
