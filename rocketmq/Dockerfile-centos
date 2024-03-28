@@ -22,7 +22,7 @@
 FROM eclipse-temurin:8-jdk-centos7 AS builder
 
 # 默认版本4.5.2
-ARG version=4.5.2
+ARG version=5.2.0
 
 RUN set -eux \
     && yum -y update \
